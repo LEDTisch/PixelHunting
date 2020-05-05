@@ -13,7 +13,7 @@ int mypixelx=5;
 int mypixely=5;
 int thierpixelx=6;
 int theirpixely=6;
-boolean amihunter =true;
+boolean amihunter =false;
 char blue;
 int pixel[10][15];
 
