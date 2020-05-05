@@ -13,7 +13,7 @@ int mypixelx=5;
 int mypixely=5;
 int thierpixelx=6;
 int theirpixely=6;
-boolean amihunter =false;
+boolean amihunter =true;
 char blue;
 int pixel[10][15];
 
@@ -97,9 +97,26 @@ if(blue=='1'){//neuesspiel
   if(amihunter) {
  led.setPixelColor(pixel[thierpixelx][theirpixely],led.Color(10,0,0));
   led.setPixelColor(pixel[mypixelx][mypixely],led.Color(0,70,0));
+
+  if(pixel[thierpixelx][theirpixely]==pixel[mypixelx][mypixely]) {
+    for(int y =0;y<15;y++) {
+      for(int x=0;x<15;x++) {
+          led.setPixelColor(pixel[x][y],led.Color(0,100,0)); //Hier warten auf weitere Angaben des Server wann ein neues Spiel gestartet wird
+      }
+    } 
+  }
+  
   }else{
     led.setPixelColor(pixel[thierpixelx][theirpixely],led.Color(70,0,0));
   led.setPixelColor(pixel[mypixelx][mypixely],led.Color(0,10,0));
+
+  if(pixel[thierpixelx][theirpixely]==pixel[mypixelx][mypixely]) {
+    for(int y =0;y<15;y++) {
+      for(int x=0;x<15;x++) {
+          led.setPixelColor(pixel[x][y],led.Color(100,0,0));
+      }
+    } 
+  }
   }
   
  
