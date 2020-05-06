@@ -1,5 +1,8 @@
 #include <Arduino.h>
 #include <ESP8266WiFi.h>
+#include "SoftwareSerial.h"
+
+SoftwareSerial ConnectionSerial(3, 1);
 
 const char *ssid = "lap";
 const char *password = "##Pilatus.b4##pi!?";
@@ -13,6 +16,8 @@ int thierposy = 0;
 
 void setup()
 {
+  ConnectionSerial.begin(9600);
+
   Serial.begin(9600);
 
  
@@ -28,48 +33,48 @@ void setup()
 }
 void settheirspos(int x, int y)
 {
-  Serial.print("o");
+  ConnectionSerial.print("o");
   delay(2);
-  Serial.print("x");
+  ConnectionSerial.print("x");
   delay(2);
-  Serial.print(x);
+  ConnectionSerial.print(x);
   delay(2);
-  Serial.print("y");
+  ConnectionSerial.print("y");
   delay(2);
-  Serial.print(y);
+  ConnectionSerial.print(y);
   delay(2);
-  Serial.print("e");
+  ConnectionSerial.print("e");
 }
 
 void setmyspos(int x, int y)
 {
-  Serial.print("m");
+  ConnectionSerial.print("m");
   delay(2);
-  Serial.print("x");
+  ConnectionSerial.print("x");
   delay(2);
-  Serial.print(x);
+  ConnectionSerial.print(x);
   delay(2);
-  Serial.print("y");
+  ConnectionSerial.print("y");
   delay(2);
-  Serial.print(y);
+  ConnectionSerial.print(y);
   delay(2);
-  Serial.print("e");
+  ConnectionSerial.print("e");
 }
 
 void sethunter(boolean isthisclienthunter)
 {
-  Serial.print("h");
+  ConnectionSerial.print("h");
 
   if (isthisclienthunter)
   {
-    Serial.print(1);
+    ConnectionSerial.print(1);
   }
   else
   {
-    Serial.print(0);
+    ConnectionSerial.print(0);
   }
 
-  Serial.print("e");
+  ConnectionSerial.print("e");
 }
 
 void loop()
@@ -77,7 +82,7 @@ void loop()
 
   String string="";
   char c=2;
-  if (Serial.available())
+  if (ConnectionSerial.available())
   
   {
 
@@ -85,7 +90,7 @@ void loop()
     {
       delay(2);
       
-      c = Serial.read();
+      c = ConnectionSerial.read();
 
       string += c;
     }
