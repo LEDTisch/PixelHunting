@@ -154,7 +154,7 @@ if(readesp.startsWith("n")) {
         delay(2);
         Serial2.print(mypixely);
         delay(2);
-         Serial2.println("e");
+         Serial2.print("e");
          delay(2);
       }
 
@@ -172,7 +172,7 @@ if(readesp.startsWith("n")) {
         delay(2);
         Serial2.print(mypixelx);
         delay(2);
-         Serial2.println("e");
+         Serial2.print("e");
          delay(2);
       }
 
@@ -191,7 +191,7 @@ if(readesp.startsWith("n")) {
         delay(2);
         Serial2.print(mypixelx);
         delay(2);
-         Serial2.println("e");
+         Serial2.print("e");
          delay(2);
       }
 
@@ -209,7 +209,7 @@ if(readesp.startsWith("n")) {
         delay(2);
         Serial2.print(mypixely);
         delay(2);
-         Serial2.println("e");
+         Serial2.print("e");
          delay(2);
       }
 
