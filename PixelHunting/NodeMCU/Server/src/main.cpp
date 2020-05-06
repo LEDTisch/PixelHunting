@@ -2,16 +2,23 @@
 #include <ESP8266WiFi.h>
 const char *ssid = "WLANbridge";
 const char *password = "Pi-Server";
-const uint16_t port = 8090;
-const char *host = "192.168.1.83";
+
 
 int myposx = 0;
 int myposy = 0;
 int thierposx = 0;
 int thierposy = 0;
+ 
+WiFiServer wifiServer(1234);
 void setup() {
   Serial.begin(9600);
    WiFi.begin(ssid, password);
+
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(200);
+   
+  }
+   wifiServer.begin();
 }
 
 
@@ -103,8 +110,33 @@ void loop() {
     string = "";
   }
 
-  WiFiClient client;
-  sethunter(false);
-  //settheirspos(9, 9);
+
+
+   WiFiClient client = wifiServer.available();
+char t=2;
+String test;
+   if(client) {
+     if(client.available()>0)  {
+       while(c!='e') {
+         delay(2);
+          t=client.read();
+         test+=t; 
+         setmyspos(3,3);
+         delay(12);
+       }
+
+       
+
+            
+        
+
+       //Handel
+
+       test ="";
+     }
+   }
+
+  //sethunter(false);
+ 
   delay(500);
 }
