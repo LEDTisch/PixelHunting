@@ -44,20 +44,21 @@ void setmyspos(int x, int y)
   delay(2);
   Serial.print("e");
 }
+
 void sethunter(boolean isthisclienthunter)
 {
-  ConnectionSerial.print("h");
+  Serial.print("h");
 
   if (isthisclienthunter)
   {
-    ConnectionSerial.print(1);
+    Serial.print(1);
   }
   else
   {
-    ConnectionSerial.print(0);
+    Serial.print(0);
   }
 
-  ConnectionSerial.print("e");
+  Serial.print("e");
 }
 
 void loop() {
