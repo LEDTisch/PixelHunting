@@ -1,8 +1,8 @@
 #include <Arduino.h>
 #include <ESP8266WiFi.h>
 
-const char *ssid = "";
-const char *password = "";
+const char *ssid = "lap";
+const char *password = "##Pilatus.b4##pi!?";
 const uint16_t port = 8090;
 const char *host = "192.168.1.83";
 
