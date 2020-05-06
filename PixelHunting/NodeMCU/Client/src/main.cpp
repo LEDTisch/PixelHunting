@@ -108,8 +108,7 @@ void loop()
       myposy = string.substring(1, indexend).toInt();
 
 
-delay(500);
-    setmyspos(1,1);
+
 
     }
    
