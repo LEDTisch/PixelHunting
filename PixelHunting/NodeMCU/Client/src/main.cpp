@@ -1,8 +1,8 @@
 #include <Arduino.h>
 #include <ESP8266WiFi.h>
 
-const char *ssid = "WLANbridge";
-const char *password = "Pi-Server";
+const char *ssid = "";
+const char *password = "";
 const uint16_t port = 8090;
 const char *host = "192.168.1.83";
 
