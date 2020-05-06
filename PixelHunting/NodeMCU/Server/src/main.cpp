@@ -49,6 +49,21 @@ void setmyspos(int x, int y)
   delay(2);
   ConnectionSerial.print("e");
 }
+void sethunter(boolean isthisclienthunter)
+{
+  ConnectionSerial.print("h");
+
+  if (isthisclienthunter)
+  {
+    ConnectionSerial.print(1);
+  }
+  else
+  {
+    ConnectionSerial.print(0);
+  }
+
+  ConnectionSerial.print("e");
+}
 
 void loop() {
   String string="";
@@ -93,7 +108,7 @@ void loop() {
   }
 
   WiFiClient client;
-  //sethunter(false);
+  sethunter(false);
   //settheirspos(9, 9);
   delay(500);
 }
