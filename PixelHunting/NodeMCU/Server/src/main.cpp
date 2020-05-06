@@ -18,6 +18,8 @@ void setup() {
     delay(200);
    
   }
+
+
    wifiServer.begin();
 }
 
@@ -114,16 +116,31 @@ void loop() {
 
    WiFiClient client = wifiServer.available();
 char t=2;
-String test;
-   if(client) {
+String test;Serial.println("hier 0.0");
+   
+     Serial.println("hier 0.1");
      if(client.available()>0)  {
-       while(c!='e') {
+       Serial.println("hier");
+       while(t!='e') {
          delay(2);
           t=client.read();
          test+=t; 
-         setmyspos(3,3);
-         delay(12);
+         
+        Serial.println(t);
        }
+
+
+Serial.println(test);
+      if(test[0]=='t') {
+       int indexx = test.indexOf("x");
+       int indexy = test.indexOf("y");
+        int indexend = test.indexOf("e");
+       String x = test.substring(indexx+1,indexy);
+      String y = test.substring(indexy+1,indexend);
+
+      Serial.println(x+y);
+          settheirspos(x.toInt(),y.toInt());
+      }
 
        
 
@@ -133,8 +150,9 @@ String test;
        //Handel
 
        test ="";
+       t=2;
      }
-   }
+   
 
   //sethunter(false);
  
