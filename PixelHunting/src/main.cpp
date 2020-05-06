@@ -17,6 +17,7 @@ boolean amihunter = true;
 boolean ingamewait = false;
 char blue;
 int pixel[10][15];
+boolean testconnnection = false;
 
 int row_x[10];
 
@@ -25,6 +26,7 @@ void setup()
   led.begin();
   Serial.begin(9600);
   Serial1.begin(9600);
+  Serial2.begin(9600);
   row_x[0] = 135;
   row_x[1] = 134;
   row_x[2] = 105;
@@ -57,6 +59,71 @@ void setup()
 void loop()
 {
 
+
+
+  if(Serial2.available()) {
+    Serial2.setTimeout(50);
+    String readesp="";
+char c = 2;
+while(c!='e') {
+  delay(2);
+  c = Serial2.read();
+  readesp += c;
+
+}
+
+Serial.println(readesp);
+
+  if(readesp.startsWith("n")) {
+
+    ingamewait = true;
+  } 
+
+if(readesp.startsWith("n")) {
+
+    ingamewait = false;
+  } 
+
+
+ if(readesp.startsWith("h")) {
+   if(readesp.substring(1).toInt()==1) {
+     amihunter = true;
+   }else{
+     amihunter= false;
+   }
+
+ }
+
+  if(readesp.startsWith("m")) { 
+
+
+    int indexx = readesp.indexOf('x');
+    int indexy = readesp.indexOf('y');
+    int indexend = readesp.indexOf('e');
+    if(indexy==-1||indexx==-1) {}else{
+    
+     mypixelx = readesp.substring(indexx+1,indexy).toInt();
+     mypixely = readesp.substring(indexy+1,indexend).toInt();
+    }
+  }
+
+  if(readesp.startsWith("o")) { 
+     int indexx = readesp.indexOf('x');
+    int indexy = readesp.indexOf('y');
+    int indexend = readesp.indexOf('e');
+    if(indexy==-1||indexx==-1) {}else{
+    
+     
+     thierpixelx = readesp.substring(indexx+1,indexy).toInt();
+     theirpixely = readesp.substring(indexy+1,indexend).toInt();
+     
+    }
+  }
+
+
+
+  }
+
   //GET PIXEL THIERSX AND Y and if i hunter 
 
   //UND abfrage der eigenen Position falls diese durch eine Zufällige positionierung des esp32 servers verändert wird
@@ -76,11 +143,15 @@ void loop()
         if (mypixely < 14)
         {
           mypixely++;
+         
+
         }
         else
         {
           mypixely = 0;
         }
+        
+         Serial2.println("y"+mypixely);
       }
 
       if (blue == '2')
@@ -93,6 +164,7 @@ void loop()
         {
           mypixelx = 0;
         }
+         Serial2.println("x"+mypixelx);
       }
 
       if (blue == '0')
@@ -105,6 +177,8 @@ void loop()
         {
           mypixelx = 9;
         }
+
+         Serial2.println("x"+mypixelx);
       }
 
       if (blue == '7')
@@ -117,6 +191,7 @@ void loop()
         {
           mypixely = 14;
         }
+         Serial2.println("y"+mypixely);
       }
 
       if (blue == '1')
@@ -143,6 +218,7 @@ void loop()
       }
       ingamewait = true;
     }
+    
   }
   else
   {
@@ -160,6 +236,12 @@ void loop()
       }
       ingamewait = true;
     }
+    
+
+  }
+
+  if(testconnnection)  {
+led.setPixelColor(pixel[0][0],led.Color(100,0,0));
 
   }
 
