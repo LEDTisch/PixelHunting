@@ -150,8 +150,11 @@ if(readesp.startsWith("n")) {
         {
           mypixely = 0;
         }
-        
-         Serial2.println("y"+mypixely);
+        Serial2.print("y");
+        delay(2);
+        Serial.print(mypixely);
+        delay(2);
+         Serial2.println("e");
       }
 
       if (blue == '2')
@@ -164,7 +167,11 @@ if(readesp.startsWith("n")) {
         {
           mypixelx = 0;
         }
-         Serial2.println("x"+mypixelx);
+         Serial2.print("x");
+        delay(2);
+        Serial.print(mypixelx);
+        delay(2);
+         Serial2.println("e");
       }
 
       if (blue == '0')
@@ -178,7 +185,11 @@ if(readesp.startsWith("n")) {
           mypixelx = 9;
         }
 
-         Serial2.println("x"+mypixelx);
+         Serial2.print("x");
+        delay(2);
+        Serial.print(mypixelx);
+        delay(2);
+         Serial2.println("e");
       }
 
       if (blue == '7')
@@ -191,7 +202,11 @@ if(readesp.startsWith("n")) {
         {
           mypixely = 14;
         }
-         Serial2.println("y"+mypixely);
+          Serial2.print("y");
+        delay(2);
+        Serial.print(mypixely);
+        delay(2);
+         Serial2.println("e");
       }
 
       if (blue == '1')
