@@ -77,9 +77,11 @@ void loop() {
       
       int indexend = string.indexOf("e");
       myposy = string.substring(1, indexend).toInt();
+       delay(500);
+    setmyspos(1,1);
     }
    
-    
+   
     //Handel input
 
     string = "";
