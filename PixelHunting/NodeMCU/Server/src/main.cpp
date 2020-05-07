@@ -19,7 +19,7 @@ int thierposy = 0;
 void setup()
 {
 
-  server.begin();
+
   Serial.begin(9600);
   pinMode(LED_BUILTIN,OUTPUT);
                                 digitalWrite(LED_BUILTIN,HIGH);
@@ -38,7 +38,7 @@ Serial.println("versuche wlan verbindung");
         Serial.print("Verbindung mit host");
 
    
-
+  server.begin();
 }
 void settheirspos(int x, int y)
 {
@@ -141,9 +141,19 @@ void loop()
 
   WiFiClient client = server.available();
 
-  if(client.available) {
-    Serial.println(client.readString());
-  }
+
+ if (client) {
+   if(client.connected()) {
+
+    
+        Serial.println(client.readString());
+      
+
+   }else{
+     
+   }
+ }
+  
 
 
 //setmyspos(0,0);
