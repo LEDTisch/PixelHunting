@@ -19,6 +19,7 @@ int thierposy = 0;
 
 void setup()
 {
+  Serial.begin(9600);
   pinMode(LED_BUILTIN,OUTPUT);
                                 digitalWrite(LED_BUILTIN,HIGH);
   softwareserial.begin(9600);
@@ -78,26 +79,76 @@ void EthernetConnection(){
 
 }
 
+
+
+
+int iindex=0;
+char CHAR;
+const int MaxLength=15;
+char message[MaxLength];
+
+float getValue(char gcode){
+  	char *ptr=message;
+	
+	while ((ptr>=message) && (ptr<(message+MaxLength))){	
+		if (*ptr==gcode){
+			return(atof(ptr+1));
+		}
+		ptr=strchr(ptr,' ')+1;
+	}
+	
+	return(-1);	
+}
+
+void process(){
+  int tcode=(int) getValue('T');
+switch(tcode){
+  case 0:
+  myposx=(int)getValue('X');
+  myposy=(int)getValue('Y');
+  Serial.println(myposy);
+  break;
+  case 1:
+  thierposx=(int)getValue('X');
+  thierposy=(int)getValue('Y');
+  break;
+}
+}
+
+
 void loop()
 {
   //EthernetConnection();
 
-  String string="";
-  char c=2;
-  if (softwareserial.available())
-  
-  {
-
-  }
 
   //sethunter(false);
   //settheirspos(9, 9);
  // delay(500);
-setmyspos(0,0);
+
+
+
+  if(softwareserial.available()) {//eigene position aktualisieren
+      CHAR=softwareserial.read();
+      if(iindex < MaxLength-1){
+      message[iindex++] = CHAR;
+
+      }else{
+        Serial.println("Error: BufferOverflow");
+      }
+
+      if(CHAR == '\n'){
+        iindex=0;
+        process();
+      }
+
+  }
+
+
+//setmyspos(0,0);
 //settheirspos(5,6);
-delay(200);
-settheirspos(0,1);
-delay(200);
+//delay(200);
+//settheirspos(0,1);
+//delay(200);
 
 
 

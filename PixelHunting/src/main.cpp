@@ -129,8 +129,26 @@ float getValue(char gcode){
 
 
 
-void sendmyPosition(int x,int y){
-//Serial2.println("T0"+" X"+x+" Y"+y);
+void settheirspos(int x, int y)
+{
+  thierpixelx=x;
+  theirpixely=y;
+  String eins="T1";
+  String zwei=" X";
+  String drei=" Y";
+  String senden=eins+zwei+thierpixelx+drei+theirpixely;
+    Serial2.println(senden);
+}
+
+void setmyspos(int x, int y)
+{
+  mypixelx=x;
+  mypixely=y;
+  String eins="T0";
+  String zwei=" X";
+  String drei=" Y";
+  String senden=eins+zwei+mypixelx+drei+mypixely;
+  Serial2.println(senden);
 }
 
 void process(){
@@ -262,7 +280,8 @@ void loop()
       }
     }
 
-    sendmyPosition(mypixelx,mypixely);
+    setmyspos(mypixelx,mypixely);
+    draw();
   }
 
 
