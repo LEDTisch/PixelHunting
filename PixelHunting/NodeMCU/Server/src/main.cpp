@@ -139,6 +139,12 @@ void loop()
 
   }
 
+  WiFiClient client = server.available();
+
+  if(client.available) {
+    Serial.println(client.readString());
+  }
+
 
 //setmyspos(0,0);
 //settheirspos(5,6);
