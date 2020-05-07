@@ -27,19 +27,24 @@ void setup()
  
 
   WiFi.begin(ssid, password);
-Serial.println("versuche wlan verbindung");
+Serial.println("\n\n\nVersuche mit wlan zu verbinden");
   while (WiFi.status() != WL_CONNECTED)
   {
     Serial.print(".");
    delay(100);
   }
-  Serial.println("verbindung geglückt");
-        Serial.print("Verbindung mit host");
+  Serial.println("\nverbindung hergestellt");
+        Serial.println("\nVerbindung mit host");
 
      while (!client.connect(host, port)) {
 Serial.print(".");
     }
     Serial.println("\nverbunden");
+    Serial.println("\nserverIP: ");
+    Serial.print(client.remoteIP());
+   
+
+    client.write("Hallo Tim😎");
 
     client.write("ge");
 
