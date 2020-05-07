@@ -1,13 +1,16 @@
 #include <Arduino.h>
 #include <ESP8266WiFi.h>
 
+#include <SoftwareSerial.h>
+SoftwareSerial softwareserial(13,15,false);
+
 const char *ssid = "lap";
 const char *password = "##Pilatus.b4##pi!?";
 const uint16_t port = 1234;
 const char *host = "79.231.224.114";
 
 int myposx = 0;
-int myposy = 0;
+int myposy = 5;
 int thierposx = 0;
 int thierposy = 0;
 
@@ -18,7 +21,7 @@ void setup()
 {
   pinMode(LED_BUILTIN,OUTPUT);
                                 digitalWrite(LED_BUILTIN,HIGH);
-  Serial.begin(9600);
+  softwareserial.begin(9600);
 
  
 
@@ -29,58 +32,39 @@ void setup()
    delay(100);
   }
 
-     while (!client.connect(host, port)) {
+     /*while (!client.connect(host, port)) {
  
 
     }
     client.write("ge");
 
-    client.flush();
+    client.flush();*/
 }
 void settheirspos(int x, int y)
 {
-  Serial.print("o");
-  delay(2);
-  Serial.print("x");
-  delay(2);
-  Serial.print(x);
-  delay(2);
-  Serial.print("y");
-  delay(2);
-  Serial.print(y);
-  delay(2);
-  Serial.print("e");
+  thierposx=x;
+  thierposy=y;
+    String eins="T1";
+  String zwei=" X";
+  String drei=" Y";
+  String senden=eins+zwei+thierposx+drei+thierposy;
+    softwareserial.println(senden);
 }
 
 void setmyspos(int x, int y)
 {
-  Serial.print("m");
-  delay(2);
-  Serial.print("x");
-  delay(2);
-  Serial.print(x);
-  delay(2);
-  Serial.print("y");
-  delay(2);
-  Serial.print(y);
-  delay(2);
-  Serial.print("e");
+  myposx=x;
+  myposy=y;
+  String eins="T0";
+  String zwei=" X";
+  String drei=" Y";
+  String senden=eins+zwei+myposx+drei+myposy;
+    softwareserial.println(senden);
 }
 
 void sethunter(boolean isthisclienthunter)
 {
-  Serial.print("h");
-
-  if (isthisclienthunter)
-  {
-    Serial.print(1);
-  }
-  else
-  {
-    Serial.print(0);
-  }
-
-  Serial.print("e");
+ 
 }
 
 void EthernetConnection(){
@@ -92,7 +76,6 @@ void EthernetConnection(){
     }
  
 
-    client.stop();
 }
 
 void loop()
@@ -101,62 +84,20 @@ void loop()
 
   String string="";
   char c=2;
-  if (Serial.available())
+  if (softwareserial.available())
   
   {
 
-    while (c != 'e')
-    {
-      delay(2);
-      
-      c = Serial.read();
-
-      string += c;
-    }
-
-    
-
-
-    
-    if (string.startsWith("x"))
-    {
-
-      int indexend = string.indexOf("e");
-      myposx = string.substring(1, indexend).toInt();
-       client.write('t'+'x'+myposx+'y'+myposy+'e');
-        client.flush();
-                digitalWrite(LED_BUILTIN,LOW);
-                delay(50);
-                                digitalWrite(LED_BUILTIN,HIGH);
-
-
-    }
-
-    if (string.startsWith("y"))
-    {
-      
-      int indexend = string.indexOf("e");
-      myposy = string.substring(1, indexend).toInt();
-        client.write('t'+'x'+myposx+'y'+myposy+'e');
-        client.flush();
-        digitalWrite(LED_BUILTIN,LOW);
-                       delay(50);
-                                digitalWrite(LED_BUILTIN,HIGH);
-
-
-
-    }
-   
-    
-    //Handel input
-
-    string = "";
   }
 
   //sethunter(false);
   //settheirspos(9, 9);
  // delay(500);
-
+setmyspos(0,0);
+//settheirspos(5,6);
+delay(200);
+settheirspos(0,1);
+delay(200);
 
 
 

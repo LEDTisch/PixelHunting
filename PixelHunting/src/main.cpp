@@ -56,169 +56,9 @@ void setup()
   }
 }
 
-void loop()
-{
 
 
-
-  if(Serial2.available()) {
-    Serial2.setTimeout(50);
-    String readesp="";
-char c = 2;
-while(c!='e') {
-  delay(2);
-  c = Serial2.read();
-  readesp += c;
-
-}
-
-Serial.println(readesp);
-
-  if(readesp.startsWith("n")) {
-
-    ingamewait = true;
-  } 
-
-if(readesp.startsWith("n")) {
-
-    ingamewait = false;
-  } 
-
-
- if(readesp.startsWith("h")) {
-   if(readesp.substring(1).toInt()==1) {
-     amihunter = true;
-   }else{
-     amihunter= false;
-   }
-
- }
-
-  if(readesp.startsWith("m")) { 
-
-
-    int indexx = readesp.indexOf('x');
-    int indexy = readesp.indexOf('y');
-    int indexend = readesp.indexOf('e');
-    if(indexy==-1||indexx==-1) {}else{
-    
-     mypixelx = readesp.substring(indexx+1,indexy).toInt();
-     mypixely = readesp.substring(indexy+1,indexend).toInt();
-    }
-  }
-
-  if(readesp.startsWith("o")) { 
-     int indexx = readesp.indexOf('x');
-    int indexy = readesp.indexOf('y');
-    int indexend = readesp.indexOf('e');
-    if(indexy==-1||indexx==-1) {}else{
-    
-     
-     thierpixelx = readesp.substring(indexx+1,indexy).toInt();
-     theirpixely = readesp.substring(indexy+1,indexend).toInt();
-     
-    }
-  }
-
-
-
-  }
-
-  //GET PIXEL THIERSX AND Y and if i hunter 
-
-  //UND abfrage der eigenen Position falls diese durch eine Zufällige positionierung des esp32 servers verändert wird
-
-  if (Serial1.available()&&!ingamewait)
-  {
-
-    //blue=Serial1.read();
-    Serial1.setTimeout(50);
-    String bb = Serial1.readString();
-
-    if (bb[0] == 's')
-    {
-      blue = bb[1];
-      if (blue == '4')
-      { //hoch
-        if (mypixely < 14)
-        {
-          mypixely++;
-         
-
-        }
-        else
-        {
-          mypixely = 0;
-        }
-        Serial2.print("y");
-        delay(2);
-        Serial2.print(mypixely);
-        delay(2);
-         Serial2.print("e");
-         delay(2);
-      }
-
-      if (blue == '2')
-      { //rechts
-        if (mypixelx < 9)
-        {
-          mypixelx++;
-        }
-        else
-        {
-          mypixelx = 0;
-        }
-         Serial2.print("x");
-        delay(2);
-        Serial2.print(mypixelx);
-        delay(2);
-         Serial2.print("e");
-         delay(2);
-      }
-
-      if (blue == '0')
-      { //links
-        if (mypixelx > 0)
-        {
-          mypixelx--;
-        }
-        else
-        {
-          mypixelx = 9;
-        }
-
-         Serial2.print("x");
-        delay(2);
-        Serial2.print(mypixelx);
-        delay(2);
-         Serial2.print("e");
-         delay(2);
-      }
-
-      if (blue == '7')
-      { //runter
-        if (mypixely > 0)
-        {
-          mypixely--;
-        }
-        else
-        {
-          mypixely = 14;
-        }
-          Serial2.print("y");
-        delay(2);
-        Serial2.print(mypixely);
-        delay(2);
-         Serial2.print("e");
-         delay(2);
-      }
-
-      if (blue == '1')
-      { //neuesspiel
-      }
-    }
-  }
-
+void draw(){
   led.clear();
 
   if (amihunter)
@@ -265,4 +105,169 @@ led.setPixelColor(pixel[0][0],led.Color(100,0,0));
   }
 
   led.show();
+}
+
+
+
+int index=0;
+char CHAR;
+const int MaxLength=15;
+char message[MaxLength];
+
+float getValue(char gcode){
+  	char *ptr=message;
+	
+	while ((ptr>=message) && (ptr<(message+MaxLength))){	
+		if (*ptr==gcode){
+			return(atof(ptr+1));
+		}
+		ptr=strchr(ptr,' ')+1;
+	}
+	
+	return(-1);	
+}
+
+
+
+void sendmyPosition(int x,int y){
+//Serial2.println("T0"+" X"+x+" Y"+y);
+}
+
+void process(){
+  int tcode=(int) getValue('T');
+switch(tcode){
+  case 0:
+  mypixelx=(int)getValue('X');
+  mypixely=(int)getValue('Y');
+  Serial.println(mypixely);
+  draw();
+  break;
+  case 1:
+    thierpixelx=(int)getValue('X');
+  theirpixely=(int)getValue('Y');
+  draw();
+  break;
+}
+}
+
+
+void loop()
+{
+
+
+
+
+
+
+
+  if(Serial2.available()) {//eigene position aktualisieren
+      CHAR=Serial2.read();
+      if(index < MaxLength-1){
+      message[index++] = CHAR;
+
+      }else{
+        Serial.println("Error: BufferOverflow");
+      }
+
+      if(CHAR == '\n'){
+        index=0;
+        process();
+      }
+
+  }
+
+
+
+
+
+
+
+
+
+
+  //GET PIXEL THIERSX AND Y and if i hunter 
+
+  //UND abfrage der eigenen Position falls diese durch eine Zufällige positionierung des esp32 servers verändert wird
+
+
+
+
+
+  if (Serial1.available()&&!ingamewait)
+  {
+
+    //blue=Serial1.read();
+    Serial1.setTimeout(50);
+    String bb = Serial1.readString();
+
+    if (bb[0] == 's')
+    {
+      blue = bb[1];
+      if (blue == '4')
+      { //hoch
+        if (mypixely < 14)
+        {
+          mypixely++;
+         
+
+        }
+        else
+        {
+          mypixely = 0;
+        }
+
+      }
+      if (blue == '2')
+      { //rechts
+        if (mypixelx < 9)
+        {
+          mypixelx++;
+        }
+        else
+        {
+          mypixelx = 0;
+        }
+
+      }
+
+      if (blue == '0')
+      { //links
+        if (mypixelx > 0)
+        {
+          mypixelx--;
+        }
+        else
+        {
+          mypixelx = 9;
+        }
+
+
+      }
+
+      if (blue == '7')
+      { //runter
+        if (mypixely > 0)
+        {
+          mypixely--;
+        }
+        else
+        {
+          mypixely = 14;
+        }
+
+      }
+
+      if (blue == '1')
+      { //neuesspiel
+      }
+    }
+
+    sendmyPosition(mypixelx,mypixely);
+  }
+
+
+
+
+
+  
 }
