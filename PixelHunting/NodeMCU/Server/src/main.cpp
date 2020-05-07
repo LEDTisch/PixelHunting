@@ -1,160 +1,152 @@
 #include <Arduino.h>
 #include <ESP8266WiFi.h>
+
+#include <SoftwareSerial.h>
+SoftwareSerial softwareserial(13,15,false);
+
 const char *ssid = "WLANbridge";
 const char *password = "Pi-Server";
 
+WiFiServer server(1234);
 
 int myposx = 0;
-int myposy = 0;
+int myposy = 5;
 int thierposx = 0;
 int thierposy = 0;
- 
-WiFiServer wifiServer(1234);
-void setup() {
+
+
+
+void setup()
+{
+
+  server.begin();
   Serial.begin(9600);
-   WiFi.begin(ssid, password);
+  pinMode(LED_BUILTIN,OUTPUT);
+                                digitalWrite(LED_BUILTIN,HIGH);
+  softwareserial.begin(9600);
 
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(200);
-   
+ 
+
+  WiFi.begin(ssid, password);
+Serial.println("versuche wlan verbindung");
+  while (WiFi.status() != WL_CONNECTED)
+  {
+    Serial.print(".");
+   delay(100);
   }
+  Serial.println("verbindung geglückt");
+        Serial.print("Verbindung mit host");
 
+   
 
-   wifiServer.begin();
 }
-
-
 void settheirspos(int x, int y)
 {
-  Serial.print("o");
-  delay(2);
-  Serial.print("x");
-  delay(2);
-  Serial.print(x);
-  delay(2);
-  Serial.print("y");
-  delay(2);
-  Serial.print(y);
-  delay(2);
-  Serial.print("e");
+  thierposx=x;
+  thierposy=y;
+    String eins="T1";
+  String zwei=" X";
+  String drei=" Y";
+  String senden=eins+zwei+thierposx+drei+thierposy;
+    softwareserial.println(senden);
 }
 
 void setmyspos(int x, int y)
 {
-  Serial.print("m");
-  delay(2);
-  Serial.print("x");
-  delay(2);
-  Serial.print(x);
-  delay(2);
-  Serial.print("y");
-  delay(2);
-  Serial.print(y);
-  delay(2);
-  Serial.print("e");
+  myposx=x;
+  myposy=y;
+  String eins="T0";
+  String zwei=" X";
+  String drei=" Y";
+  String senden=eins+zwei+myposx+drei+myposy;
+    softwareserial.println(senden);
 }
 
 void sethunter(boolean isthisclienthunter)
 {
-  Serial.print("h");
-
-  if (isthisclienthunter)
-  {
-    Serial.print(1);
-  }
-  else
-  {
-    Serial.print(0);
-  }
-
-  Serial.print("e");
+ 
 }
 
-void loop() {
-  String string="";
-  char c=2;
-  if (Serial.available())
-  
-  {
-
-    while (c != 'e')
-    {
-      delay(2);
-      
-      c = Serial.read();
-
-      string += c;
-    }
-
-    
+void EthernetConnection(){
+ 
 
 
-    
-    if (string.startsWith("x"))
-    {
+ 
 
-      int indexend = string.indexOf("e");
-      myposx = string.substring(1, indexend).toInt();
-    }
+}
 
-    if (string.startsWith("y"))
-    {
-      
-      int indexend = string.indexOf("e");
-      myposy = string.substring(1, indexend).toInt();
-       delay(500);
-    setmyspos(1,1);
-    }
-   
-   
-    //Handel input
 
-    string = "";
+
+
+int iindex=0;
+char CHAR;
+const int MaxLength=15;
+char message[MaxLength];
+
+float getValue(char gcode){
+  	char *ptr=message;
+	
+	while ((ptr>=message) && (ptr<(message+MaxLength))){	
+		if (*ptr==gcode){
+			return(atof(ptr+1));
+		}
+		ptr=strchr(ptr,' ')+1;
+	}
+	
+	return(-1);	
+}
+
+void process(){
+  int tcode=(int) getValue('T');
+switch(tcode){
+  case 0:
+  myposx=(int)getValue('X');
+  myposy=(int)getValue('Y');
+  Serial.println(myposy);
+  break;
+  case 1:
+  thierposx=(int)getValue('X');
+  thierposy=(int)getValue('Y');
+  break;
+}
+}
+
+
+void loop()
+{
+  //EthernetConnection();
+
+
+  //sethunter(false);
+  //settheirspos(9, 9);
+ // delay(500);
+
+
+
+  if(softwareserial.available()) {//eigene position aktualisieren
+      CHAR=softwareserial.read();
+      if(iindex < MaxLength-1){
+      message[iindex++] = CHAR;
+
+      }else{
+        Serial.println("Error: BufferOverflow");
+      }
+
+      if(CHAR == '\n'){
+        iindex=0;
+        process();
+      }
+
   }
 
 
-
-   WiFiClient client = wifiServer.available();
-char t=2;
-String test;Serial.println("hier 0.0");
-   
-     Serial.println("hier 0.1");
-     if(client.available()>0)  {
-       Serial.println("hier");
-       while(t!='e') {
-         delay(2);
-          t=client.read();
-         test+=t; 
-         
-        Serial.println(t);
-       }
+//setmyspos(0,0);
+//settheirspos(5,6);
+//delay(200);
+//settheirspos(0,1);
+//delay(200);
 
 
-Serial.println(test);
-      if(test[0]=='t') {
-       int indexx = test.indexOf("x");
-       int indexy = test.indexOf("y");
-        int indexend = test.indexOf("e");
-       String x = test.substring(indexx+1,indexy);
-      String y = test.substring(indexy+1,indexend);
 
-      Serial.println(x+y);
-          settheirspos(x.toInt(),y.toInt());
-      }
 
-       
-
-            
-        
-
-       //Handel
-
-       test ="";
-       t=2;
-     }
-   
-
-  //sethunter(false);
- 
-  delay(500);
 }

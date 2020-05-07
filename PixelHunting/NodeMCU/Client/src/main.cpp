@@ -27,19 +27,24 @@ void setup()
  
 
   WiFi.begin(ssid, password);
-
+Serial.println("versuche wlan verbindung");
   while (WiFi.status() != WL_CONNECTED)
   {
+    Serial.print(".");
    delay(100);
   }
+  Serial.println("verbindung geglückt");
+        Serial.print("Verbindung mit host");
 
-     /*while (!client.connect(host, port)) {
- 
-
+     while (!client.connect(host, port)) {
+Serial.print(".");
     }
+    Serial.println("\nverbunden");
+
     client.write("ge");
 
-    client.flush();*/
+    client.flush();
+
 }
 void settheirspos(int x, int y)
 {
