@@ -192,7 +192,7 @@ String resived;
     }
 
     if(sethunter) {
-      sethunter(1);
+      sethunter(0);
     }
 
 client.setTimeout(50);
