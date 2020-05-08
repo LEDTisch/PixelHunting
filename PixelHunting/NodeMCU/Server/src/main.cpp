@@ -186,7 +186,6 @@ client.setTimeout(50);
        
    if(resived!="") {
  Serial.println(resived);
- Serial.println("Yposition: ");
 
 
 process(resived);
