@@ -124,15 +124,16 @@ switch(tcode){
   case 0:
   myposx=(int)getValue('X',test);
   myposy=(int)getValue('Y',test);
-  Serial.println(myposy);
-  Serial.println(myposx);
+
+  setmyspos(myposx,myposy);
 
 
   break;
   case 1:
   thierposx=(int)getValue('X',test);
   thierposy=(int)getValue('Y',test);
-  Serial.println(thierposx);
+
+  settheirspos(thierposx,thierposy);
   break;
 }
 }
@@ -185,8 +186,6 @@ client.setTimeout(50);
     }
        
    if(resived!="") {
- Serial.println(resived);
-
 
 process(resived);
 
