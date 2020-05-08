@@ -85,10 +85,10 @@ char CHAR;
 const int MaxLength=15;
 char message[MaxLength];
 
-float getValue(char gcode){
-  	char *ptr=message;
+float getValue(char gcode,char m[]){
+  	char *ptr=m;
 	
-	while ((ptr>=message) && (ptr<(message+MaxLength))){	
+	while ((ptr>=m) && (ptr<(m+MaxLength))){	
 		if (*ptr==gcode){
 			return(atof(ptr+1));
 		}
@@ -99,16 +99,16 @@ float getValue(char gcode){
 }
 
 void process(){
-  int tcode=(int) getValue('T');
+  int tcode=(int) getValue('T',message);
 switch(tcode){
   case 0:
-  myposx=(int)getValue('X');
-  myposy=(int)getValue('Y');
+  myposx=(int)getValue('X',message);
+  myposy=(int)getValue('Y',message);
   Serial.println(myposy);
   break;
   case 1:
-  thierposx=(int)getValue('X');
-  thierposy=(int)getValue('Y');
+  thierposx=(int)getValue('X',message);
+  thierposy=(int)getValue('Y',message);
   break;
 }
 }
