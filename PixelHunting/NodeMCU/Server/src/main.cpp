@@ -104,7 +104,6 @@ switch(tcode){
   case 0:
   myposx=(int)getValue('X',message);
   myposy=(int)getValue('Y',message);
-  Serial.println(myposy);
   break;
   case 1:
   thierposx=(int)getValue('X',message);
