@@ -77,7 +77,7 @@ void EthernetConnection(){
 
 }
 void sendmyPositiontoClient(){
-      String eins="T0";
+      String eins="T1";
   String zwei=" X";
   String drei=" Y";
   String senden=eins+zwei+myposx+drei+myposy;
