@@ -43,12 +43,13 @@ Serial.print(".");
     Serial.println("\nserverIP: ");
     Serial.print(client.remoteIP());
    
+    client.print("Hallo Tim😎");
 
-    client.write("Hallo Tim😎");
+    client.print("ge");
 
-    client.write("ge");
+    Serial.println("\nwriteerror");
+    Serial.print(client.getWriteError());
 
-    client.flush();
 
 }
 void settheirspos(int x, int y)
@@ -85,7 +86,7 @@ void sendmyPositiontoServer(){
   String zwei=" X";
   String drei=" Y";
   String senden=eins+zwei+myposx+drei+myposy;
-  client.print(senden);
+  client.write("verschoben!");
     }
 
 

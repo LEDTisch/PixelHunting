@@ -111,7 +111,7 @@ switch(tcode){
 }
 }
 
-
+WiFiClient client;
 void loop()
 {
   //EthernetConnection();
@@ -139,7 +139,7 @@ void loop()
 
   }
 
-  WiFiClient client = server.available();
+  client = server.available();
 String resived;
 
  if (client) {
