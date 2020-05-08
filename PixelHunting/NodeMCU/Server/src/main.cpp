@@ -125,12 +125,14 @@ switch(tcode){
   myposx=(int)getValue('X',test);
   myposy=(int)getValue('Y',test);
   Serial.println(myposy);
+  Serial.println(myposx);
 
 
   break;
   case 1:
   thierposx=(int)getValue('X',test);
   thierposy=(int)getValue('Y',test);
+  Serial.println(thierposx);
   break;
 }
 }
