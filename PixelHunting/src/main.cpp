@@ -84,8 +84,8 @@ void draw(){
   }
   else
   {
-    led.setPixelColor(pixel[thierpixelx][theirpixely], led.Color(70, 0, 0));
-    led.setPixelColor(pixel[mypixelx][mypixely], led.Color(0, 30, 0));
+    led.setPixelColor(pixel[thierpixelx][theirpixely], led.Color(150, 0, 0));
+    led.setPixelColor(pixel[mypixelx][mypixely], led.Color(0, 20, 0));
 
     if (pixel[thierpixelx][theirpixely] == pixel[mypixelx][mypixely])
     {
