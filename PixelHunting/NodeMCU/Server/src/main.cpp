@@ -64,22 +64,18 @@ void setmyspos(int x, int y)
     softwareserial.println(senden);
 }
 
-void sethunter(int isthisclienthunter)
+void sethunter(boolean isthisclienthunter)
 {
-    String eins = "T3";
-    String zwei = " H";
-    softwareserial.println(eins+zwei+isthisclienthunter);
-String senden;
-if(isthisclienthunter==1) {
- senden=eins+zwei+0;
-}else{
-  senden=eins+zwei+1;
-}
-   
-    client.println(senden);
+ 
 }
 
+void EthernetConnection(){
+ 
 
+
+ 
+
+}
 void sendmyPositiontoClient(){
       String eins="T1";
   String zwei=" X";
@@ -182,17 +178,12 @@ void loop()
 
 String resived;
 
-    boolean hunter = false;
+
 
 
     while(!client) {
-      hunter = true;
        client = server.available();
       Serial.println("Waiting for client");
-    }
-
-    if(sethunter) {
-      sethunter(0);
     }
 
 client.setTimeout(50);

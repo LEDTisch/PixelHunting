@@ -168,13 +168,6 @@ switch(tcode){
   theirpixely=(int)getValue('Y');
   draw();
   break;
-  case 2:
-  if((int)getValue('H')==0){
-    amihunter=true;
-  }else{
-    amihunter=false;
-  }
-  break;
 }
 }
 
