@@ -7,6 +7,7 @@ SoftwareSerial softwareserial(13,15,false);
 const char *ssid = "WLANbridge";
 const char *password = "Pi-Server";
 
+WiFiClient client;
 WiFiServer server(1234);
 
 int myposx = 0;
@@ -39,6 +40,7 @@ Serial.println("versuche wlan verbindung");
 
    
   server.begin();
+   
 }
 void settheirspos(int x, int y)
 {
@@ -111,7 +113,6 @@ switch(tcode){
 }
 }
 
-WiFiClient client;
 void loop()
 {
   //EthernetConnection();
@@ -139,20 +140,32 @@ void loop()
 
   }
 
-  client = server.available();
+
 String resived;
 
- if (client) {
-   if(client.connected()) {
 
-    
-       resived = client.readString();
-      
 
-   }else{
-     
-   }
- }
+
+    while(!client) {
+       client = server.available();
+      Serial.println("Waiting for client");
+    }
+
+client.setTimeout(50);
+    if(client.available()) {
+    resived = client.readString();
+    }else{
+
+    }
+       
+   if(resived!="") {
+ Serial.println(resived);
+
+}
+
+resived="";
+
+
   
 
 
