@@ -136,7 +136,7 @@ switch(tcode){
   myposx=(int)getValue('X',test);
   myposy=(int)getValue('Y',test);
 
-  setmyspos(myposx,myposy);
+  //setmyspos(myposx,myposy);
 
 
   break;
