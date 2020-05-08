@@ -160,6 +160,13 @@ client.setTimeout(50);
        
    if(resived!="") {
  Serial.println(resived);
+ Serial.println("Yposition: ");
+
+
+int n = resived.length();
+char test[n+1];
+ strcpy(test, resived.c_str()); 
+ Serial.println(getValue('Y',test));
 
 }
 
