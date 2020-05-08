@@ -42,10 +42,6 @@ Serial.print(".");
     Serial.println("\nverbunden");
     Serial.println("\nserverIP: ");
     Serial.print(client.remoteIP());
-   
-    client.println("Hallo Tim😎");
-
-    client.println("ge");
 
     Serial.println("\nwriteerror");
     Serial.print(client.getWriteError());
@@ -127,6 +123,31 @@ switch(tcode){
 }
 }
 
+void process(String i){
+  int n = i.length();
+char test[n+1];
+ strcpy(test, i.c_str()); 
+
+  int tcode=(int) getValue('T',test);
+switch(tcode){
+  case 0:
+  myposx=(int)getValue('X',test);
+  myposy=(int)getValue('Y',test);
+
+  setmyspos(myposx,myposy);
+
+
+  break;
+  case 1:
+  thierposx=(int)getValue('X',test);
+  thierposy=(int)getValue('Y',test);
+
+  settheirspos(thierposx,thierposy);
+  break;
+}
+}
+
+
 
 void loop()
 {
@@ -155,6 +176,30 @@ void loop()
 
   }
 
+
+String resived;
+
+
+
+
+
+
+client.setTimeout(50);
+    if(client.available()) {
+    resived = client.readString();
+    }else{
+
+    }
+       
+   if(resived!="") {
+
+process(resived);
+
+}
+
+
+
+resived="";
 
 //setmyspos(0,0);
 //settheirspos(5,6);

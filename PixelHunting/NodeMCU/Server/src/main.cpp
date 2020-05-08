@@ -76,6 +76,13 @@ void EthernetConnection(){
  
 
 }
+void sendmyPositiontoClient(){
+      String eins="T0";
+  String zwei=" X";
+  String drei=" Y";
+  String senden=eins+zwei+myposx+drei+myposy;
+  client.println(senden);
+    }
 
 
 
@@ -104,6 +111,7 @@ switch(tcode){
   case 0:
   myposx=(int)getValue('X',message);
   myposy=(int)getValue('Y',message);
+  sendmyPositiontoClient();
   break;
   case 1:
   thierposx=(int)getValue('X',message);
@@ -162,6 +170,7 @@ void loop()
       if(CHAR == '\n'){
         iindex=0;
         process();
+
       }
 
   }
