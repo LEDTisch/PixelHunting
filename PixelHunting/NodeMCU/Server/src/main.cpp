@@ -113,6 +113,30 @@ switch(tcode){
 }
 }
 
+
+void process(String i){
+  int n = i.length();
+char test[n+1];
+ strcpy(test, i.c_str()); 
+
+  int tcode=(int) getValue('T',test);
+switch(tcode){
+  case 0:
+  myposx=(int)getValue('X',test);
+  myposy=(int)getValue('Y',test);
+  Serial.println(myposy);
+
+
+  break;
+  case 1:
+  thierposx=(int)getValue('X',test);
+  thierposy=(int)getValue('Y',test);
+  break;
+}
+}
+
+
+
 void loop()
 {
   //EthernetConnection();
@@ -163,10 +187,7 @@ client.setTimeout(50);
  Serial.println("Yposition: ");
 
 
-int n = resived.length();
-char test[n+1];
- strcpy(test, resived.c_str()); 
- Serial.println(getValue('Y',test));
+process(resived);
 
 }
 
