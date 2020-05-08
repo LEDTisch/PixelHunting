@@ -70,10 +70,13 @@ void setmyspos(int x, int y)
     softwareserial.println(senden);
 }
 
-void sethunter(boolean isthisclienthunter)
-{
- 
+void sendHunter(int hunter){
+String eins="T2";
+String zwei=" H";
+String senden=eins+zwei+hunter;
+softwareserial.println(senden);
 }
+
 
 
 
@@ -120,6 +123,7 @@ switch(tcode){
   thierposx=(int)getValue('X',message);
   thierposy=(int)getValue('Y',message);
   break;
+
 }
 }
 
@@ -143,6 +147,9 @@ switch(tcode){
   thierposy=(int)getValue('Y',test);
 
   settheirspos(thierposx,thierposy);
+  break;
+    case 2:
+    sendHunter((getValue('H',test)));
   break;
 }
 }
