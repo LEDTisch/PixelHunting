@@ -78,18 +78,15 @@ void sethunter(boolean isthisclienthunter)
  
 }
 
-void EthernetConnection(){
- 
 
 
-    if(client.available()){
-      client.read();
+void sendmyPositiontoServer(){
+      String eins="T1";
+  String zwei=" X";
+  String drei=" Y";
+  String senden=eins+zwei+myposx+drei+myposy;
+  client.print(senden);
     }
- 
-
-}
-
-
 
 
 int iindex=0;
@@ -117,6 +114,10 @@ switch(tcode){
   myposx=(int)getValue('X');
   myposy=(int)getValue('Y');
   Serial.println(myposy);
+
+  sendmyPositiontoServer();
+
+
   break;
   case 1:
   thierposx=(int)getValue('X');

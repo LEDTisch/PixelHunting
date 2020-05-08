@@ -19,6 +19,8 @@ char blue;
 int pixel[10][15];
 boolean testconnnection = false;
 
+boolean einmalausfuren=true;
+
 int row_x[10];
 
 void setup()
@@ -173,6 +175,11 @@ void loop()
 {
 
 
+
+if(einmalausfuren){
+  einmalausfuren=false;
+  draw();
+}
 
 
 

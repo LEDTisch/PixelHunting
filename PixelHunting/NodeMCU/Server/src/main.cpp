@@ -140,13 +140,13 @@ void loop()
   }
 
   WiFiClient client = server.available();
-
+String resived;
 
  if (client) {
    if(client.connected()) {
 
     
-        Serial.println(client.readString());
+       resived = client.readString();
       
 
    }else{
