@@ -246,7 +246,7 @@ if(einmalausfuren){
         }
         else
         {
-          mypixely = 0;
+       
         }
 
       }
@@ -258,7 +258,7 @@ if(einmalausfuren){
         }
         else
         {
-          mypixelx = 0;
+          
         }
 
       }
@@ -271,7 +271,7 @@ if(einmalausfuren){
         }
         else
         {
-          mypixelx = 9;
+       
         }
 
 
@@ -284,8 +284,7 @@ if(einmalausfuren){
           mypixely--;
         }
         else
-        {
-          mypixely = 14;
+     {
         }
 
       }
